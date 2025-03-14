@@ -183,7 +183,7 @@ if st.session_state.authenticated:
     st.header(f"Hello, {st.session_state.username}! 😊")
 
     if st.session_state.role == "admin":
-        st.subheader("Admin Panel 🎛️")
+        st.subheader("Express your feelings❤️")
 
         # Admin sets new values (sliders with tick marks every 10)
         new_faith = st.slider("🌟 Faith in You", 0, 100, saved_values["faith_in_you"], format="%d")
@@ -205,3 +205,13 @@ if st.session_state.authenticated:
             st.metric("🌟 Faith in You", new_faith)
         with col2:
             st.metric("❤️ Comeback of Love", new_comeback)
+
+    elif st.session_state.role == "user":
+        st.subheader("View Progress 👀")
+
+        col1, col2 = st.columns(2)
+        with col1:
+            st.metric("🌟 Faith in You", saved_values["faith_in_you"])
+        with col2:
+            st.metric("❤️ Comeback of Love", saved_values["comeback_of_love"])
+
