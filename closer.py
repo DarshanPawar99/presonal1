@@ -64,7 +64,7 @@ def send_email(faith, comeback, message_type):
     admin_body = f"""
     Hello {admin_name},
 
-    I noticed the changes in me, and I really appreciate you accepting my feelings.  
+    I happy that you noticed the small changes in me, and I really appreciate you accepting my feelings and giving feedback on it.  
 
     🌟 Faith in You: {faith}/100  
     ❤️ Comeback of Love: {comeback}/100  
@@ -100,7 +100,7 @@ def send_email(faith, comeback, message_type):
 
         Just a reminder: Problems come and go in every relationship.  
 
-        Sit down and talk with your partner to solve the current issue. Small problems, if ignored, can turn into big ones. Let's not repeat past mistakes.  
+        Sit down and talk with your partner to solve the current issue. Small problems, if ignored, can turn into big ones. Let's not repeat past mistakes. Remember you the parent and mature one here.  
 
         🌟 Faith in You: {faith}/100  
         ❤️ Comeback of Love: {comeback}/100  
