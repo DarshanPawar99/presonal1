@@ -3,6 +3,9 @@ import smtplib
 import json
 from email.message import EmailMessage
 
+# Set page layout to wide
+st.set_page_config(layout="wide")
+
 # Load credentials from Streamlit secrets
 admin_email = st.secrets["credentials"]["admin_email"]
 admin_password = st.secrets["credentials"]["admin_password"]
@@ -58,7 +61,7 @@ if st.session_state.authenticated:
             st.session_state.username = ""
             st.rerun()
 
-st.title("Relationship Tracker ❤️")
+st.title("❤️ Relationship Tracker")
 
 # Login form (Only show if not authenticated)
 if not st.session_state.authenticated:
@@ -84,17 +87,12 @@ if not st.session_state.authenticated:
 if st.session_state.authenticated:
     st.header(f"Hello, {st.session_state.username}! 😊")
 
-    # Columns layout for sliders
-    col1, col2 = st.columns(2)
-
     if st.session_state.role == "admin":
         st.subheader("Admin Panel 🎛️")
 
-        # Admin sets new values
-        with col1:
-            new_faith = st.slider("🌟 Faith in You", 0, 100, saved_values["faith_in_you"])
-        with col2:
-            new_comeback = st.slider("❤️ Comeback of Love", 0, 100, saved_values["comeback_of_love"])
+        # Admin sets new values (sliders)
+        new_faith = st.slider("🌟 Faith in You", 0, 100, saved_values["faith_in_you"], step=10)
+        new_comeback = st.slider("❤️ Comeback of Love", 0, 100, saved_values["comeback_of_love"], step=10)
 
         # Save button: Only updates permanent storage when clicked
         if st.button("✅ Save Changes"):
@@ -106,13 +104,18 @@ if st.session_state.authenticated:
             save_values(new_faith, new_comeback)  # Save to JSON
             st.success("Values saved successfully!")
 
-        # Display current values
-        st.write(f"🌟 **Faith in You:** {new_faith}")
-        st.write(f"❤️ **Comeback of Love:** {new_comeback}")
+        # **NEW:** Display selected values below the save button using columns
+        col1, col2 = st.columns(2)
+        with col1:
+            st.metric("🌟 Faith in You", new_faith)
+        with col2:
+            st.metric("❤️ Comeback of Love", new_comeback)
 
     elif st.session_state.role == "user":
         st.subheader("User View 👀")
 
+        # Display current values side by side
+        col1, col2 = st.columns(2)
         with col1:
             st.metric("🌟 Faith in You", saved_values["faith_in_you"])
         with col2:
