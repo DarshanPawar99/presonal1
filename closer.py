@@ -111,16 +111,18 @@ if st.session_state.authenticated:
     if st.session_state.role == "admin":
         st.subheader("Admin Panel")
 
-        # Capture slider updates
+        # Admin sets new values but they are not saved yet
         new_faith = st.slider("Faith in You", 0, 100, st.session_state.faith_in_you)
         new_comeback = st.slider("Comeback of Love", 0, 100, st.session_state.comeback_of_love)
 
-        # Check if values have changed
-        if new_faith != st.session_state.faith_in_you or new_comeback != st.session_state.comeback_of_love:
+        # Save button: Only updates session state and sends email when clicked
+        if st.button("Save Changes"):
             st.session_state.faith_in_you = new_faith
             st.session_state.comeback_of_love = new_comeback
-            send_email(new_faith, new_comeback)  # Send email to both user & admin
+            send_email(new_faith, new_comeback)  # Send email after saving
+            st.success("Values saved successfully!")
 
+        # Display current values
         st.write(f"**Faith in You:** {st.session_state.faith_in_you}")
         st.write(f"**Comeback of Love:** {st.session_state.comeback_of_love}")
 
