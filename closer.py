@@ -180,6 +180,8 @@ if not st.session_state.authenticated:
 if st.session_state.authenticated:
     st.title("❤️ Relationship Tracker")
     st.header(f"Hello, {st.session_state.username}! 😊")
+    st.markdown("---")
+
 
     if st.session_state.role == "admin":
         st.subheader("Express your feelings❤️")
