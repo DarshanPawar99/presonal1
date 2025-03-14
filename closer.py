@@ -64,7 +64,7 @@ def send_email(faith, comeback, message_type):
     admin_body = f"""
     Hello {admin_name},
 
- I happy that you noticed the small changes in me, and I really appreciate you accepting my feelings and giving feedback on it. 
+ I'm happy that you noticed the small changes in me, and I really appreciate you accepting my feelings and giving feedback on it. 
 
     🌟 Faith in You: {faith}/100  
     ❤️ Comeback of Love: {comeback}/100  
