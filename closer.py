@@ -188,18 +188,18 @@ if st.session_state.authenticated:
         new_faith = st.slider("🌟 Faith in You", 0, 100, saved_values["faith_in_you"], format="%d")
         new_comeback = st.slider("❤️ Comeback of Love", 0, 100, saved_values["comeback_of_love"], format="%d")
 
+        col1, col2 = st.columns(2)
+        with col1:
+            st.metric("🌟 Faith in You", new_faith)
+        with col2:
+            st.metric("❤️ Comeback of Love", new_comeback)
+
         if st.button("✅ Save Changes"):
             message_type = "increase" if (new_faith > saved_values["faith_in_you"] or new_comeback > saved_values["comeback_of_love"]) else "decrease"
 
             save_values(new_faith, new_comeback)
             send_email(new_faith, new_comeback, message_type)
             st.success("Values saved successfully!")
-
-        col1, col2 = st.columns(2)
-        with col1:
-            st.metric("🌟 Faith in You", new_faith)
-        with col2:
-            st.metric("❤️ Comeback of Love", new_comeback)
 
     elif st.session_state.role == "user":
         st.subheader("View Progress 👀")
