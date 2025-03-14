@@ -64,12 +64,12 @@ def send_email(faith, comeback, message_type):
     admin_body = f"""
     Hello {admin_name},
 
-    I happy that you noticed the small changes in me, and I really appreciate you accepting my feelings and giving feedback on it.  
+    I appreciate you accepting my feelings and giving feedback.
 
     🌟 Faith in You: {faith}/100  
     ❤️ Comeback of Love: {comeback}/100  
 
-    It means a lot to me. Thank you!
+    Thank you!
 
     Best Regards,  
     {user_name}
@@ -82,9 +82,7 @@ def send_email(faith, comeback, message_type):
         user_body = f"""
         Hello {user_name},
 
-        Problems come and go in all relationships. Sit down and have a chat with your partner to solve the current issue.  
-
-        Don’t let small problems pile up and create a rift like before. Take time to talk and sort things out. 
+        Problems come and go in all relationships. 
 
         🌟 Faith in You: {faith}/100  
         ❤️ Comeback of Love: {comeback}/100  
@@ -98,14 +96,12 @@ def send_email(faith, comeback, message_type):
         admin_body = f"""
         Hello {admin_name},
 
-        Just a reminder: Problems come and go in every relationship.  
-
-        Sit down and talk with your partner to solve the current issue. Small problems, if ignored, can turn into big ones. Let's not repeat past mistakes. Remember you the parent and mature one here.  
+        Problems come and go in every relationship.  
 
         🌟 Faith in You: {faith}/100  
         ❤️ Comeback of Love: {comeback}/100  
 
-        Have a conversation, listen, and fix things together.  
+        Have a conversation and fix things together.  
 
         Best Regards,  
         {user_name}
@@ -154,27 +150,31 @@ if st.session_state.authenticated:
             st.session_state.authenticated = False
             st.session_state.role = None
             st.session_state.username = ""
-            st.rerun()
+            st.rerun()  # Refresh the page
 
 # Login form (Only show if not authenticated)
 if not st.session_state.authenticated:
-    st.subheader("🔐 Login")
-    email = st.text_input("Email")
-    password = st.text_input("Password", type="password")
+    with st.form("login_form"):
+        st.subheader("🔐 Login")
+        email = st.text_input("Email")
+        password = st.text_input("Password", type="password")
+        login_button = st.form_submit_button("Login")
 
-    if st.button("Login"):
-        if email == admin_email and password == admin_password:
-            st.session_state.authenticated = True
-            st.session_state.role = "admin"
-            st.session_state.username = admin_name
-            st.success(f"Logged in as Admin ({admin_name})")
-        elif email == user_email and password == user_password:
-            st.session_state.authenticated = True
-            st.session_state.role = "user"
-            st.session_state.username = user_name
-            st.success(f"Logged in as User ({user_name})")
-        else:
-            st.error("Invalid email or password")
+        if login_button:
+            if email == admin_email and password == admin_password:
+                st.session_state.authenticated = True
+                st.session_state.role = "admin"
+                st.session_state.username = admin_name
+                st.success(f"Logged in as Admin ({admin_name})")
+                st.rerun()  # Refresh the page to hide the login fields
+            elif email == user_email and password == user_password:
+                st.session_state.authenticated = True
+                st.session_state.role = "user"
+                st.session_state.username = user_name
+                st.success(f"Logged in as User ({user_name})")
+                st.rerun()  # Refresh the page to hide the login fields
+            else:
+                st.error("Invalid email or password")
 
 # Show content only if authenticated
 if st.session_state.authenticated:
@@ -184,16 +184,12 @@ if st.session_state.authenticated:
     if st.session_state.role == "admin":
         st.subheader("Express your feelings❤️")
 
-        # Admin sets new values (sliders with tick marks every 10)
+        # Admin sets new values
         new_faith = st.slider("🌟 Faith in You", 0, 100, saved_values["faith_in_you"], format="%d")
         new_comeback = st.slider("❤️ Comeback of Love", 0, 100, saved_values["comeback_of_love"], format="%d")
 
-
         if st.button("✅ Save Changes"):
-            if new_faith > saved_values["faith_in_you"] or new_comeback > saved_values["comeback_of_love"]:
-                message_type = "increase"
-            else:
-                message_type = "decrease"
+            message_type = "increase" if (new_faith > saved_values["faith_in_you"] or new_comeback > saved_values["comeback_of_love"]) else "decrease"
 
             save_values(new_faith, new_comeback)
             send_email(new_faith, new_comeback, message_type)
@@ -213,4 +209,3 @@ if st.session_state.authenticated:
             st.metric("🌟 Faith in You", saved_values["faith_in_you"])
         with col2:
             st.metric("❤️ Comeback of Love", saved_values["comeback_of_love"])
-
