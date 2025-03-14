@@ -189,6 +189,8 @@ if st.session_state.authenticated:
         # Admin sets new values
         new_faith = st.slider("🌟 Faith in You", 0, 100, saved_values["faith_in_you"], format="%d")
         new_comeback = st.slider("❤️ Comeback of Love", 0, 100, saved_values["comeback_of_love"], format="%d")
+        st.markdown("---")
+
 
         col1, col2 = st.columns(2)
         with col1:
