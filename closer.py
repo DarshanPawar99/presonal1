@@ -90,9 +90,12 @@ if st.session_state.authenticated:
     if st.session_state.role == "admin":
         st.subheader("Admin Panel 🎛️")
 
-        # Admin sets new values (sliders)
-        new_faith = st.slider("🌟 Faith in You", 0, 100, saved_values["faith_in_you"], step=10)
-        new_comeback = st.slider("❤️ Comeback of Love", 0, 100, saved_values["comeback_of_love"], step=10)
+        # Admin sets new values (sliders with tick marks every 10)
+        new_faith = st.slider("🌟 Faith in You", 0, 100, saved_values["faith_in_you"], format="%d")
+        new_comeback = st.slider("❤️ Comeback of Love", 0, 100, saved_values["comeback_of_love"], format="%d")
+
+        # **Tick Marks Visualization**
+        st.write("**Scale Reference:** 0 | 10 | 20 | 30 | 40 | 50 | 60 | 70 | 80 | 90 | 100")
 
         # Save button: Only updates permanent storage when clicked
         if st.button("✅ Save Changes"):
