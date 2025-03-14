@@ -156,8 +156,6 @@ if st.session_state.authenticated:
             st.session_state.username = ""
             st.rerun()
 
-st.title("❤️ Relationship Tracker")
-
 # Login form (Only show if not authenticated)
 if not st.session_state.authenticated:
     st.subheader("🔐 Login")
@@ -180,6 +178,7 @@ if not st.session_state.authenticated:
 
 # Show content only if authenticated
 if st.session_state.authenticated:
+    st.title("❤️ Relationship Tracker")
     st.header(f"Hello, {st.session_state.username}! 😊")
 
     if st.session_state.role == "admin":
